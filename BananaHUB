@@ -690,6 +690,53 @@ Tasks.CandyTask = task.spawn(function()
     end
 end)
 
+-- Banana Hub V5.0 | Auto Pick-Up & TouchInterest Trigger 🍌🦈
+
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local RunService = game:GetService("RunService")
+local LocalPlayer = Players.LocalPlayer
+
+local AutoPickupActive = false
+local Connections = {}
+
+-- Function to trigger touch interests and touch parts instantly
+local function processTouchInterests()
+    local char = LocalPlayer.Character
+    local hrp = char and char:FindFirstChild("HumanoidRootPart")
+    if not hrp then return end
+
+    for _, obj in ipairs(Workspace:GetDescendants()) do
+        if obj:IsA("BasePart") then
+            -- Check for touch interest / fire touch interest
+            if typeof(firetouchinterest) == "function" then
+                pcall(function()
+                    firetouchinterest(hrp, obj, 0)
+                    firetouchinterest(hrp, obj, 1)
+                end)
+            end
+        elseif obj:IsA("ProximityPrompt") then
+            pcall(function()
+                fireproximityprompt(obj)
+            end)
+        end
+    end
+end
+
+-- Toggle and Loop Connection
+Connections.AutoPickupLoop = RunService.Heartbeat:Connect(function()
+    if AutoPickupActive then
+        processTouchInterests()
+    end
+end)
+
+-- Example Control Trigger (You can bind this to a button in your hub)
+getgenv().ToggleAutoPickup = function()
+    AutoPickupActive = not AutoPickupActive
+    print("🌀 Auto Pick-Up TouchInterest State:", AutoPickupActive)
+    return AutoPickupActive
+end
+
 -- Bring Boss
 safeBindClick(BringBossBtn, function()
     Features.BringBoss = not Features.BringBoss
