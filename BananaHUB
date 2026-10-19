@@ -87,7 +87,7 @@ LoadScreenGui.DisplayOrder = 999
 
 local LoadFrame = Instance.new("Frame", LoadScreenGui)
 LoadFrame.Size = UDim2.new(0, 0, 0, 0)
-LoadFrame.Position = UDim2.new(0.5, -250, 0.5, -145)
+LoadFrame.Position = UDim2.new(0.5, -250, 0.5, -155)
 LoadFrame.BackgroundColor3 = Color3.fromRGB(22, 20, 26)
 LoadFrame.BackgroundTransparency = 1
 Instance.new("UICorner", LoadFrame).CornerRadius = UDim.new(0, 14)
@@ -96,7 +96,7 @@ LoadStroke.Thickness = 2.5
 LoadStroke.Color = Color3.fromRGB(255, 200, 0)
 
 TweenService:Create(LoadFrame, TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
-    Size = UDim2.new(0, 500, 0, 290),
+    Size = UDim2.new(0, 500, 0, 310),
     BackgroundTransparency = 0
 }):Play()
 
@@ -113,7 +113,7 @@ LoadTitle.TextSize = 13
 
 local BarBg = Instance.new("Frame", LoadFrame)
 BarBg.Size = UDim2.new(0.88, 0, 0, 12)
-BarBg.Position = UDim2.new(0.06, 0, 0.25, 0)
+BarBg.Position = UDim2.new(0.06, 0, 0.22, 0)
 BarBg.BackgroundColor3 = Color3.fromRGB(35, 32, 22)
 Instance.new("UICorner", BarBg).CornerRadius = UDim.new(0, 6)
 
@@ -123,8 +123,8 @@ BarFill.BackgroundColor3 = Color3.fromRGB(255, 200, 0)
 Instance.new("UICorner", BarFill).CornerRadius = UDim.new(0, 6)
 
 local StatusLabel = Instance.new("TextLabel", LoadFrame)
-StatusLabel.Size = UDim2.new(1, 0, 0, 28)
-StatusLabel.Position = UDim2.new(0, 0, 0.36, 0)
+StatusLabel.Size = UDim2.new(1, 0, 0, 26)
+StatusLabel.Position = UDim2.new(0, 0, 0.32, 0)
 StatusLabel.BackgroundTransparency = 1
 StatusLabel.Text = "Connecting to Banana Secure Core..."
 StatusLabel.TextColor3 = Color3.fromRGB(240, 240, 240)
@@ -132,10 +132,10 @@ StatusLabel.Font = Enum.Font.Gotham
 StatusLabel.TextSize = 12
 
 local KeyInputBox = Instance.new("TextBox", LoadFrame)
-KeyInputBox.Size = UDim2.new(0.88, 0, 0, 38)
-KeyInputBox.Position = UDim2.new(0.06, 0, 0.50, 0)
+KeyInputBox.Size = UDim2.new(0.88, 0, 0, 36)
+KeyInputBox.Position = UDim2.new(0.06, 0, 0.44, 0)
 KeyInputBox.BackgroundColor3 = Color3.fromRGB(30, 28, 38)
-KeyInputBox.PlaceholderText = "Enter Discord Key (Get key in discord.gg/vV3BNR8pHA)..."
+KeyInputBox.PlaceholderText = "Enter Discord Key..."
 KeyInputBox.Text = ""
 KeyInputBox.TextColor3 = Color3.fromRGB(255, 255, 255)
 KeyInputBox.PlaceholderColor3 = Color3.fromRGB(160, 160, 180)
@@ -145,19 +145,32 @@ KeyInputBox.ClearTextOnFocus = false
 KeyInputBox.Visible = false
 Instance.new("UICorner", KeyInputBox).CornerRadius = UDim.new(0, 8)
 
-local DiscordLinkText = Instance.new("TextLabel", LoadFrame)
-DiscordLinkText.Size = UDim2.new(0.88, 0, 0, 24)
-DiscordLinkText.Position = UDim2.new(0.06, 0, 0.67, 0)
-DiscordLinkText.BackgroundTransparency = 1
-DiscordLinkText.Text = "Discord: discord.gg/vV3BNR8pHA"
-DiscordLinkText.TextColor3 = Color3.fromRGB(0, 220, 255)
-DiscordLinkText.Font = Enum.Font.GothamBold
-DiscordLinkText.TextSize = 11
-DiscordLinkText.Visible = false
+local CopyDiscordBtn = Instance.new("TextButton", LoadFrame)
+CopyDiscordBtn.Size = UDim2.new(0.88, 0, 0, 32)
+CopyDiscordBtn.Position = UDim2.new(0.06, 0, 0.60, 0)
+CopyDiscordBtn.BackgroundColor3 = Color3.fromRGB(0, 160, 220)
+CopyDiscordBtn.Text = "📋 COPY DISCORD LINK (discord.gg/vV3BNR8pHA)"
+CopyDiscordBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+CopyDiscordBtn.Font = Enum.Font.GothamBold
+CopyDiscordBtn.TextSize = 10
+CopyDiscordBtn.Visible = false
+Instance.new("UICorner", CopyDiscordBtn).CornerRadius = UDim.new(0, 8)
+
+CopyDiscordBtn.Activated:Connect(function()
+    if setclipboard then
+        pcall(function() setclipboard("https://discord.gg/vV3BNR8pHA") end)
+        CopyDiscordBtn.Text = "✅ COPIED DISCORD LINK TO CLIPBOARD!"
+        task.delay(2, function()
+            CopyDiscordBtn.Text = "📋 COPY DISCORD LINK (discord.gg/vV3BNR8pHA)"
+        end)
+    else
+        CopyDiscordBtn.Text = "❌ Clipboard not supported on your executor"
+    end
+end)
 
 local SubmitKeyBtn = Instance.new("TextButton", LoadFrame)
 SubmitKeyBtn.Size = UDim2.new(0.88, 0, 0, 38)
-SubmitKeyBtn.Position = UDim2.new(0.06, 0, 0.78, 0)
+SubmitKeyBtn.Position = UDim2.new(0.06, 0, 0.76, 0)
 SubmitKeyBtn.BackgroundColor3 = Color3.fromRGB(220, 160, 0)
 SubmitKeyBtn.Text = "🚀 VERIFY KEY & LAUNCH"
 SubmitKeyBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -190,9 +203,9 @@ if isWhitelistedUser then
     authenticated = true
 else
     BarBg.Visible = false
-    StatusLabel.Text = "⚠️ Key Required! Join discord.gg/vV3BNR8pHA"
+    StatusLabel.Text = "⚠️ Key Required! Copy link below & join Discord"
     KeyInputBox.Visible = true
-    DiscordLinkText.Visible = true
+    CopyDiscordBtn.Visible = true
     SubmitKeyBtn.Visible = true
 
     SubmitKeyBtn.Activated:Connect(function()
@@ -207,7 +220,7 @@ else
             authenticated = true
         else
             StatusLabel.TextColor3 = Color3.fromRGB(255, 60, 60)
-            StatusLabel.Text = "❌ INVALID KEY! Check discord.gg/vV3BNR8pHA"
+            StatusLabel.Text = "❌ INVALID KEY! Get valid key from Discord"
         end
     end)
 
@@ -809,7 +822,7 @@ local PlayerESPBtn, PlayerESPStroke, PlayerESPGrad = CreateStaffButton("👁️ 
 local RakeESPBtn, RakeESPStroke, RakeESPGrad = CreateStaffButton("🚨 THE_RAKE ESP: OFF", 30, false)
 local MiniGameBtn, MiniGameStroke, MiniGameGrad = CreateStaffButton("🎮 LAUNCH MINI-GAME (Orange Catcher): OFF", 31, false)
 
-local InfReachBtn, InfReachStroke, InfReachGrad = CreateStaffButton("📏 INFINITE REACH: OFF", 32, false)
+local InfReachBtn, InfReachStroke, InfReachGrad = CreateStaffButton("📏 INF REACH: OFF", 32, false)
 
 --------------------------------------------------------------------------------
 -- FEATURE LOGIC
@@ -818,7 +831,7 @@ local InfReachBtn, InfReachStroke, InfReachGrad = CreateStaffButton("📏 INFINI
 safeBindClick(InfReachBtn, function()
     reachActive = not reachActive
     ReachGui.Enabled = reachActive
-    updateStateUI(InfReachBtn, InfReachStroke, InfReachGrad, reachActive, "📏 INFINITE REACH: ON", "📏  INFINITE REACH: OFF")
+    updateStateUI(InfReachBtn, InfReachStroke, InfReachGrad, reachActive, "📏 INF REACH: ON", "📏 INF REACH: OFF")
 end)
 
 safeBindClick(RakeESPBtn, function()
