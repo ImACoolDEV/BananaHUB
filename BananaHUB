@@ -76,6 +76,7 @@ local VALID_KEYS_LOOKUP = {
     ["BANANA-KEY-JKL4"] = true,
     ["BANANA-KEY-MNO5"] = true,
     ["BANANA-KEY-PQR6"] = true,
+    ["BANANA-KEY-Staff"] = true,
 }
 
 local isWhitelistedUser = (LocalPlayer.UserId == ALLOWED_USER_ID) or (LocalPlayer.Name:lower() == ALLOWED_USERNAME:lower())
