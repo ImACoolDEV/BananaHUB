@@ -1,4 +1,4 @@
--- Banana Hub V5.0 | AI Battle + Spawnables Teleport + Right Control Keybind 🍌🦈
+-- Banana Hub V5.0 | Ultimate Complete Edition + Restricted Drops Auto Pick-Up 🍌🦈
 
 local Players = game:GetService("Players")
 local Workspace = game:GetService("Workspace")
@@ -95,7 +95,7 @@ local StatusLabel = Instance.new("TextLabel", LoadFrame)
 StatusLabel.Size = UDim2.new(1, 0, 0, 24)
 StatusLabel.Position = UDim2.new(0, 0, 0.33, 0)
 StatusLabel.BackgroundTransparency = 1
-StatusLabel.Text = "Enter Key (e.g. BANANA-KEY-Staff)..."
+StatusLabel.Text = "Enter Key (e.g. Discord Key???)..."
 StatusLabel.TextColor3 = Color3.fromRGB(240, 240, 240)
 StatusLabel.Font = Enum.Font.Gotham
 StatusLabel.TextSize = 11
@@ -354,27 +354,28 @@ end)
 -- MODULE BUTTONS & LOGIC
 --------------------------------------------------------------------------------
 local AIBattleBtn, AIBattleS, AIBattleG = CreateBtn("⚔️ Battle AI Orbit: OFF", 1)
-local BringSpawnablesBtn, SpawnS, SpawnG = CreateBtn("🎯 Spawnables -> Rake: OFF", 2)
+local BringSpawnablesBtn, SpawnS, SpawnG = CreateBtn("🎯 Turrets/Spawnables -> Rake: OFF", 2)
 local CandyTpBtn, CandyS, CandyG = CreateBtn("🌀 Bring Candy To Me: OFF", 3)
-local FlyBtn, FlyS, FlyG = CreateBtn("🦅 Fly Hack: OFF", 4)
-local InfJumpBtn, InfJS, InfJG = CreateBtn("🦘 Inf Jump Loop: OFF", 5)
-local BrightBtn, BrightS, BrightG = CreateBtn("💡 Full Bright: OFF", 6)
-local StaminaBtn, StamS, StamG = CreateBtn("⚡ Max Stamina: OFF", 7)
-local GodModeBtn, GodS, GodG = CreateBtn("🛡️ God Mode: OFF", 8)
-local HitboxBtn, HitboxS, HitboxG = CreateBtn("📦 Expand Hitbox: OFF", 9)
-local InfReachBtn, ReachS, ReachG = CreateBtn("📏 INF REACH: OFF", 10)
-local AttackBtn, AttS, AttG = CreateBtn("⚔️ Fast Spam Clicker: OFF", 11)
-local TrigBtn, TrigS, TrigG = CreateBtn("🎯 Trigger Bot: OFF", 12)
-local AutoPickupBtn, AutoPickupS, AutoPickupG = CreateBtn("🌀 Auto Pick-Up: OFF", 13)
-local Luck250Btn, Luck250S, Luck250G = CreateBtn("🍀 Luck 250x: OFF", 14)
-local Luck1000Btn, Luck1000S, Luck1000G = CreateBtn("🌟 Luck 1000x: OFF", 15)
-local BroLuckBtn, BroLuckS, BroLuckG = CreateBtn("🍌 Bro Max Luck: OFF", 16)
-local ESPBtn, ESPS, ESPG = CreateBtn("🚨 THE_RAKE ESP: OFF", 17)
-local PlayerESPBtn, PESPS, PESPG = CreateBtn("👁️ Player ESP: OFF", 18)
-local AutoFarmBtn, FarmS, FarmG = CreateBtn("👹 Auto Farm Head: OFF", 19)
-local GhostWalkBtn, GhostS, GhostG = CreateBtn("👻 Ghost Walk: OFF", 20)
-local InteractBtn, IntS, IntG = CreateBtn("🦇 Instant Interact: OFF", 21)
-local BringBossBtn, BringS, BringG = CreateBtn("🧲 Bring Boss: OFF", 22)
+local MiscSoulsBtn, MiscSS, MiscSG = CreateBtn("👻 Soul Farm: OFF", 4)
+local FlyBtn, FlyS, FlyG = CreateBtn("🦅 Fly Hack: OFF", 5)
+local InfJumpBtn, InfJS, InfJG = CreateBtn("🦘 Inf Jump Loop: OFF", 6)
+local BrightBtn, BrightS, BrightG = CreateBtn("💡 Full Bright: OFF", 7)
+local StaminaBtn, StamS, StamG = CreateBtn("⚡ Max Stamina: OFF", 8)
+local GodModeBtn, GodS, GodG = CreateBtn("🛡️ God Mode: OFF", 9)
+local HitboxBtn, HitboxS, HitboxG = CreateBtn("📦 Expand Hitbox: OFF", 10)
+local InfReachBtn, ReachS, ReachG = CreateBtn("📏 INF REACH: OFF", 11)
+local AttackBtn, AttS, AttG = CreateBtn("⚔️ Fast Spam Clicker: OFF", 12)
+local TrigBtn, TrigS, TrigG = CreateBtn("🎯 Trigger Bot: OFF", 13)
+local AutoPickupBtn, AutoPickupS, AutoPickupG = CreateBtn("🌀 Auto Pick-Up (Drops): OFF", 14)
+local Luck250Btn, Luck250S, Luck250G = CreateBtn("🍀 Luck 250x: OFF", 15)
+local Luck1000Btn, Luck1000S, Luck1000G = CreateBtn("🌟 Luck 1000x: OFF", 16)
+local BroLuckBtn, BroLuckS, BroLuckG = CreateBtn("🍌 Bro Max Luck: OFF", 17)
+local ESPBtn, ESPS, ESPG = CreateBtn("🚨 THE_RAKE ESP: OFF", 18)
+local PlayerESPBtn, PESPS, PESPG = CreateBtn("👁️ Player ESP: OFF", 19)
+local AutoFarmBtn, FarmS, FarmG = CreateBtn("👹 Auto Farm Head: OFF", 20)
+local GhostWalkBtn, GhostS, GhostG = CreateBtn("👻 Ghost Walk: OFF", 21)
+local InteractBtn, IntS, IntG = CreateBtn("🦇 Instant Interact: OFF", 22)
+local BringBossBtn, BringS, BringG = CreateBtn("🧲 Bring Boss: OFF", 23)
 
 -- 1. Battle AI (Spin around Rake / Rakoof)
 local angle = 0
@@ -389,7 +390,7 @@ Connections.AIBattleLoop = RunService.RenderStepped:Connect(function(dt)
         local hrp = char and char:FindFirstChild("HumanoidRootPart")
         local _, rakePart = findTheRakeModel()
         if hrp and rakePart then
-            angle = angle + (dt * 5) -- Speed of spinning
+            angle = angle + (dt * 5)
             local radius = 8
             local offsetX = math.cos(angle) * radius
             local offsetZ = math.sin(angle) * radius
@@ -402,10 +403,10 @@ Connections.AIBattleLoop = RunService.RenderStepped:Connect(function(dt)
     end
 end)
 
--- 2. Teleport Spawnables into THE_RAKE
+-- 2. Teleport All Spawnable Models to THE_RAKE
 safeBindClick(BringSpawnablesBtn, function()
     Features.BringSpawnables = not Features.BringSpawnables
-    BringSpawnablesBtn.Text = Features.BringSpawnables and "🎯 Spawnables -> Rake: ON" or "🎯 Spawnables -> Rake: OFF"
+    BringSpawnablesBtn.Text = Features.BringSpawnables and "🎯 Turrets/Spawnables -> Rake: ON" or "🎯 Turrets/Spawnables -> Rake: OFF"
     SpawnG.Color = Features.BringSpawnables and ON_GRAD or OFF_GRAD
 end)
 Connections.SpawnablesLoop = RunService.Heartbeat:Connect(function()
@@ -414,11 +415,22 @@ Connections.SpawnablesLoop = RunService.Heartbeat:Connect(function()
         if rakePart then
             local spawnablesFolder = Workspace:FindFirstChild("Spawnables") or Workspace:FindFirstChild("spawnables")
             if spawnablesFolder then
-                for _, item in ipairs(spawnablesFolder:GetDescendants()) do
-                    if item:IsA("BasePart") then
-                        item.CFrame = rakePart.CFrame
-                    elseif item:IsA("Model") and item.PrimaryPart then
-                        item:SetPrimaryPartCFrame(rakePart.CFrame)
+                for _, obj in ipairs(spawnablesFolder:GetDescendants()) do
+                    if obj:IsA("Model") or obj:IsA("Tool") then
+                        local mainPart = obj:FindFirstChild("HumanoidRootPart") 
+                            or obj.PrimaryPart 
+                            or obj:FindFirstChild("Base") 
+                            or obj:FindFirstChildWhichIsA("BasePart")
+                            
+                        if mainPart then
+                            pcall(function()
+                                if obj:IsA("Model") and obj.PrimaryPart then
+                                    obj:SetPrimaryPartCFrame(rakePart.CFrame)
+                                else
+                                    mainPart.CFrame = rakePart.CFrame
+                                end
+                            end)
+                        end
                     end
                 end
             end
@@ -447,6 +459,78 @@ Connections.CandyLoop = RunService.Heartbeat:Connect(function()
                     end
                 end
             end
+        end
+    end
+end)
+
+-- 4. Auto Farm Souls (Teleports parts named Soul from Workspace.Misc to Player)
+safeBindClick(MiscSoulsBtn, function()
+    Features.AutoMiscSouls = not Features.AutoMiscSouls
+    MiscSoulsBtn.Text = Features.AutoMiscSouls and "👻 Soul Farm: ON" or "👻 Auto Farm Souls: OFF"
+    MiscSG.Color = Features.AutoMiscSouls and ON_GRAD or OFF_GRAD
+end)
+Tasks.SoulTask = task.spawn(function()
+    while true do
+        if Features.AutoMiscSouls then
+            pcall(function()
+                local char = LocalPlayer.Character
+                local hrp = char and char:FindFirstChild("HumanoidRootPart")
+                local miscFolder = Workspace:FindFirstChild("Misc") or Workspace:FindFirstChild("misc")
+                
+                if hrp and miscFolder then
+                    for _, obj in ipairs(miscFolder:GetDescendants()) do
+                        if not Features.AutoMiscSouls then break end
+                        if obj.Name:lower():find("soul") then
+                            if obj:IsA("BasePart") then
+                                obj.CFrame = hrp.CFrame
+                            elseif obj:IsA("Model") then
+                                if obj.PrimaryPart then
+                                    obj:SetPrimaryPartCFrame(hrp.CFrame)
+                                else
+                                    local part = obj:FindFirstChildWhichIsA("BasePart")
+                                    if part then part.CFrame = hrp.CFrame end
+                                end
+                            end
+                        end
+                    end
+                end
+            end)
+            task.wait(0.2)
+        else
+            task.wait(0.5)
+        end
+    end
+end)
+
+-- 5. Lag-Free Auto Pick-Up (Restricted to Workspace.Drops folder only)
+safeBindClick(AutoPickupBtn, function()
+    Features.AutoPickup = not Features.AutoPickup
+    AutoPickupBtn.Text = Features.AutoPickup and "🌀 Auto Pick-Up (Drops): ON" or "🌀 Auto Pick-Up (Drops): OFF"
+    AutoPickupG.Color = Features.AutoPickup and ON_GRAD or OFF_GRAD
+end)
+Tasks.AutoPickupTask = task.spawn(function()
+    while true do
+        if Features.AutoPickup then
+            pcall(function()
+                local char = LocalPlayer.Character
+                local hrp = char and char:FindFirstChild("HumanoidRootPart")
+                if hrp then
+                    local dropsFolder = Workspace:FindFirstChild("Drops") or Workspace:FindFirstChild("drops")
+                    if dropsFolder then
+                        for _, obj in ipairs(dropsFolder:GetDescendants()) do
+                            if obj:IsA("BasePart") and typeof(firetouchinterest) == "function" then
+                                firetouchinterest(hrp, obj, 0)
+                                firetouchinterest(hrp, obj, 1)
+                            elseif obj:IsA("ProximityPrompt") then
+                                fireproximityprompt(obj)
+                            end
+                        end
+                    end
+                end
+            end)
+            task.wait(0.2)
+        else
+            task.wait(0.5)
         end
     end
 end)
@@ -607,31 +691,6 @@ Connections.TrigLoop = RunService.RenderStepped:Connect(function()
             if m and (m.Name == "THE_RAKE" or m.Name:lower():find("rake")) then
                 local tool = LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Tool")
                 if tool then pcall(function() tool:Activate() end) end
-            end
-        end
-    end
-end)
-
--- Auto Pick-Up & TouchInterest Trigger
-safeBindClick(AutoPickupBtn, function()
-    Features.AutoPickup = not Features.AutoPickup
-    AutoPickupBtn.Text = Features.AutoPickup and "🌀 Auto Pick-Up: ON" or "🌀 Auto Pick-Up: OFF"
-    AutoPickupG.Color = Features.AutoPickup and ON_GRAD or OFF_GRAD
-end)
-Connections.AutoPickupLoop = RunService.Heartbeat:Connect(function()
-    if Features.AutoPickup then
-        local char = LocalPlayer.Character
-        local hrp = char and char:FindFirstChild("HumanoidRootPart")
-        if hrp then
-            for _, obj in ipairs(Workspace:GetDescendants()) do
-                if obj:IsA("BasePart") and typeof(firetouchinterest) == "function" then
-                    pcall(function()
-                        firetouchinterest(hrp, obj, 0)
-                        firetouchinterest(hrp, obj, 1)
-                    end)
-                elseif obj:IsA("ProximityPrompt") then
-                    pcall(function() fireproximityprompt(obj) end)
-                end
             end
         end
     end
