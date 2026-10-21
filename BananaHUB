@@ -51,16 +51,16 @@ local ALLOWED_USER_ID = 9603761866
 local ALLOWED_USERNAME = "trebtrebalt3"
 
 local VALID_KEYS_LOOKUP = {
-    ["BANANA-KEY-Staff"] = true,
-    ["BANANA-KEY-A1B2"] = true, ["BANANA-KEY-C3D4"] = true, ["BANANA-KEY-E5F6"] = true,
-    ["BANANA-KEY-G7H8"] = true, ["BANANA-KEY-I9J0"] = true, ["BANANA-KEY-K1L2"] = true,
-    ["BANANA-KEY-M3N4"] = true, ["BANANA-KEY-O5P6"] = true, ["BANANA-KEY-Q7R8"] = true,
-    ["BANANA-KEY-S9T0"] = true, ["BANANA-KEY-U1V2"] = true, ["BANANA-KEY-W3X4"] = true,
-    ["BANANA-KEY-Y5Z6"] = true, ["BANANA-KEY-7890"] = true, ["BANANA-KEY-1122"] = true,
-    ["BANANA-KEY-3344"] = true, ["BANANA-KEY-5566"] = true, ["BANANA-KEY-7788"] = true,
-    ["BANANA-KEY-9900"] = true, ["BANANA-KEY-ABC1"] = true, ["BANANA-KEY-DEF2"] = true,
-    ["BANANA-KEY-GHI3"] = true, ["BANANA-KEY-JKL4"] = true, ["BANANA-KEY-MNO5"] = true,
-    ["BANANA-KEY-PQR6"] = true,
+    ["BANANA-KEY-StaffNEW"] = true,
+    ["BANANA-KEY-Chrismas"] = true, ["BANANA-KEY-sdad"] = true, ["BANANA-KEY-Weekend"] = true,
+    ["BANANA-KEY-BANANANA"] = true, ["BANANA-KEY-SUP"] = true, ["BANANA-KEY-Early"] = true,
+    ["BANANA-KEY-BANANANANANA"] = true, ["BANANA-KEY-BALLOW"] = true, ["BANANA-KEY-Weekend13S3"] = true,
+    ["BANANA-KEY-S9TBA0"] = true, ["BANANA-KEY-WEEKNED3JACKLORD"] = true, ["BANANA-KEY-S34dM"] = true,
+    ["BANANA-KEY-Y12s5Z6"] = true, ["BANANA-KEY-WEEKNEDLORDJACK"] = true, ["BANANA-KEY-WEEKENDED#43"] = true,
+    ["BANANA-KEY-334S34"] = true, ["BANANA-KEY-HALLOWEEN"] = true, ["BANANA-KEY-WUT"] = true,
+    ["BANANA-KEY-995fA00"] = true, ["BANANA-KEY-100SUBSPEICAL"] = true, ["BANANA-KEY-ALR"] = true,
+    ["BANANA-KEY-GHs23I3"] = true, ["BANANA-KEY-HALLOWEENWEEKENEd"] = true, ["BANANA-KEY-BET"] = true,
+    ["BANANA-KEY-PQRsA6"] = true,
 }
 
 local isWhitelistedUser = (LocalPlayer.UserId == ALLOWED_USER_ID) or (LocalPlayer.Name:lower() == ALLOWED_USERNAME:lower())
