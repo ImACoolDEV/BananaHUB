@@ -643,24 +643,30 @@ Connections.HitboxLoop = RunService.RenderStepped:Connect(function()
     end
 end)
 
--- Inf Reach
+-- Inf Reach (Optimized for PC / Solara)
 safeBindClick(InfReachBtn, function()
     Features.InfReach = not Features.InfReach
     InfReachBtn.Text = Features.InfReach and "📏 INF REACH: ON" or "📏 INF REACH: OFF"
     ReachG.Color = Features.InfReach and ON_GRAD or OFF_GRAD
 end)
-Connections.ReachLoop = RunService.RenderStepped:Connect(function()
+Connections.ReachLoop = RunService.Heartbeat:Connect(function()
     if Features.InfReach then
-        local char = LocalPlayer.Character
-        local tool = char and char:FindFirstChildOfClass("Tool")
-        local handle = tool and (tool:FindFirstChild("Handle") or tool:FindFirstChildWhichIsA("BasePart"))
-        local _, rakePart = findTheRakeModel()
-        if handle and rakePart and typeof(firetouchinterest) == "function" then
-            pcall(function()
-                firetouchinterest(rakePart, handle, 0)
-                firetouchinterest(rakePart, handle, 1)
-            end)
-        end
+        pcall(function()
+            local char = LocalPlayer.Character
+            local tool = char and char:FindFirstChildOfClass("Tool")
+            local handle = tool and (tool:FindFirstChild("Handle") or tool:FindFirstChildWhichIsA("BasePart"))
+            local _, rakePart = findTheRakeModel()
+            
+            if handle and rakePart then
+                if (handle.Position - rakePart.Position).Magnitude < 40 then
+                    if typeof(firetouchinterest) == "function" then
+                        firetouchinterest(rakePart, handle, 0)
+                        firetouchinterest(rakePart, handle, 1)
+                    end
+                    tool:Activate()
+                end
+            end
+        end)
     end
 end)
 
