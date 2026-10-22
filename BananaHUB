@@ -1,4 +1,4 @@
--- Banana Hub V5.0 | Ultimate Complete Edition + Restricted Drops Auto Pick-Up 🍌🦈
+-- Banana Hub V5.0 | Ultimate Complete Edition + Optimized Inf Reach 🍌🦈
 
 local Players = game:GetService("Players")
 local Workspace = game:GetService("Workspace")
@@ -175,14 +175,36 @@ local OFF_GRAD = ColorSequence.new({ColorSequenceKeypoint.new(0, Color3.fromRGB(
 local ON_GRAD  = ColorSequence.new({ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 180, 0)), ColorSequenceKeypoint.new(1, Color3.fromRGB(200, 120, 0))})
 
 local function safeBindClick(btn, cb) btn.Activated:Connect(function() pcall(cb) end) end
+
+-- Optimized & Cached Rake Finder (Stops Lag Spikes)
+local cachedRake, cachedPart = nil, nil
+local lastRakeCheck = 0
 local function findTheRakeModel()
-    for _, obj in ipairs(Workspace:GetDescendants()) do
-        if obj:IsA("Model") and (obj.Name == "THE_RAKE" or obj.Name:lower():find("rake") or obj.Name:lower():find("rakoof")) then
-            local p = obj:FindFirstChild("HumanoidRootPart") or obj:FindFirstChild("Head") or obj:FindFirstChildWhichIsA("BasePart")
-            if p then return obj, p end
+    if tick() - lastRakeCheck > 1.5 or not cachedRake or not cachedRake.Parent then
+        cachedRake, cachedPart = nil, nil
+        for _, obj in ipairs(Workspace:GetChildren()) do
+            if obj:IsA("Model") and (obj.Name == "THE_RAKE" or obj.Name:lower():find("rake") or obj.Name:lower():find("rakoof")) then
+                local p = obj:FindFirstChild("HumanoidRootPart") or obj:FindFirstChild("Head") or obj:FindFirstChildWhichIsA("BasePart")
+                if p then
+                    cachedRake, cachedPart = obj, p
+                    break
+                end
+            end
         end
+        if not cachedRake then
+            for _, obj in ipairs(Workspace:GetDescendants()) do
+                if obj:IsA("Model") and (obj.Name == "THE_RAKE" or obj.Name:lower():find("rake") or obj.Name:lower():find("rakoof")) then
+                    local p = obj:FindFirstChild("HumanoidRootPart") or obj:FindFirstChild("Head") or obj:FindFirstChildWhichIsA("BasePart")
+                    if p then
+                        cachedRake, cachedPart = obj, p
+                        break
+                    end
+                end
+            end
+        end
+        lastRakeCheck = tick()
     end
-    return nil, nil
+    return cachedRake, cachedPart
 end
 
 --------------------------------------------------------------------------------
@@ -217,7 +239,6 @@ Instance.new("UICorner", MainFrame).CornerRadius = UDim.new(0, 14)
 Instance.new("UIStroke", MainFrame).Color = Color3.fromRGB(255, 200, 0)
 makeDraggable(MainFrame)
 
--- Right Control Keybind Toggle
 Connections.KeybindToggle = UserInputService.InputBegan:Connect(function(input, gpe)
     if not gpe and input.KeyCode == Enum.KeyCode.RightControl then
         MainFrame.Visible = not MainFrame.Visible
@@ -463,7 +484,7 @@ Connections.CandyLoop = RunService.Heartbeat:Connect(function()
     end
 end)
 
--- 4. Auto Farm Souls (Teleports parts named Soul from Workspace.Misc to Player)
+-- 4. Auto Farm Souls
 safeBindClick(MiscSoulsBtn, function()
     Features.AutoMiscSouls = not Features.AutoMiscSouls
     MiscSoulsBtn.Text = Features.AutoMiscSouls and "👻 Soul Farm: ON" or "👻 Auto Farm Souls: OFF"
@@ -643,30 +664,36 @@ Connections.HitboxLoop = RunService.RenderStepped:Connect(function()
     end
 end)
 
--- Inf Reach (Optimized for PC / Solara)
+-- Lag-Free & Optimized Inf Reach (Solara / PC Compatible)
 safeBindClick(InfReachBtn, function()
     Features.InfReach = not Features.InfReach
     InfReachBtn.Text = Features.InfReach and "📏 INF REACH: ON" or "📏 INF REACH: OFF"
     ReachG.Color = Features.InfReach and ON_GRAD or OFF_GRAD
 end)
-Connections.ReachLoop = RunService.Heartbeat:Connect(function()
-    if Features.InfReach then
-        pcall(function()
-            local char = LocalPlayer.Character
-            local tool = char and char:FindFirstChildOfClass("Tool")
-            local handle = tool and (tool:FindFirstChild("Handle") or tool:FindFirstChildWhichIsA("BasePart"))
-            local _, rakePart = findTheRakeModel()
-            
-            if handle and rakePart then
-                if (handle.Position - rakePart.Position).Magnitude < 40 then
-                    if typeof(firetouchinterest) == "function" then
-                        firetouchinterest(rakePart, handle, 0)
-                        firetouchinterest(rakePart, handle, 1)
+
+Tasks.InfReachTask = task.spawn(function()
+    while true do
+        if Features.InfReach then
+            pcall(function()
+                local char = LocalPlayer.Character
+                local tool = char and char:FindFirstChildOfClass("Tool")
+                local handle = tool and (tool:FindFirstChild("Handle") or tool:FindFirstChildWhichIsA("BasePart"))
+                local _, rakePart = findTheRakeModel()
+                
+                if handle and rakePart then
+                    if (handle.Position - rakePart.Position).Magnitude < 100 then
+                        if typeof(firetouchinterest) == "function" then
+                            firetouchinterest(rakePart, handle, 0)
+                            firetouchinterest(rakePart, handle, 1)
+                        end
+                        tool:Activate()
                     end
-                    tool:Activate()
                 end
-            end
-        end)
+            end)
+            task.wait(0.2) -- Throttled securely to avoid lagging the game/executor
+        else
+            task.wait(0.5)
+        end
     end
 end)
 
