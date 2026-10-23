@@ -1,4 +1,4 @@
--- Banana Hub V5.0 | Ultimate Complete Edition + Optimized Inf Reach 🍌🦈
+-- Banana Hub V5.0 | Ultimate Complete Edition + Optimized Inf Reach 🍌🦈[cite: 1]
 
 local Players = game:GetService("Players")
 local Workspace = game:GetService("Workspace")
@@ -13,7 +13,7 @@ local LocalPlayer = Players.LocalPlayer
 local ParentGui = (pcall(function() return gethui() end) and gethui()) or CoreGui
 
 --------------------------------------------------------------------------------
--- UNIVERSAL DRAGGABLE HELPER
+-- UNIVERSAL DRAGGABLE HELPER[cite: 1]
 --------------------------------------------------------------------------------
 local function makeDraggable(guiFrame, dragHandle)
     dragHandle = dragHandle or guiFrame
@@ -45,10 +45,13 @@ local function makeDraggable(guiFrame, dragHandle)
 end
 
 --------------------------------------------------------------------------------
--- KEYS & AUTHENTICATION SCREEN
+-- KEYS & AUTHENTICATION SCREEN (WITH BAN SYSTEM)[cite: 1]
 --------------------------------------------------------------------------------
 local ALLOWED_USER_ID = 9603761866
 local ALLOWED_USERNAME = "trebtrebalt3"
+
+local BANNED_USER_ID = 7599469284
+local BANNED_USERNAME = "gust6114"
 
 local VALID_KEYS_LOOKUP = {
     ["BANANA-KEY-StaffNEW"] = true,
@@ -63,6 +66,7 @@ local VALID_KEYS_LOOKUP = {
     ["BANANA-KEY-PQRsA6"] = true,
 }
 
+local isBannedUser = (LocalPlayer.UserId == BANNED_USER_ID) or (LocalPlayer.Name:lower() == BANNED_USERNAME:lower())
 local isWhitelistedUser = (LocalPlayer.UserId == ALLOWED_USER_ID) or (LocalPlayer.Name:lower() == ALLOWED_USERNAME:lower())
 
 local LoadScreenGui = Instance.new("ScreenGui", ParentGui)
@@ -124,7 +128,18 @@ SubmitKeyBtn.TextSize = 11
 Instance.new("UICorner", SubmitKeyBtn).CornerRadius = UDim.new(0, 8)
 
 local authenticated = false
-if isWhitelistedUser then
+if isBannedUser then
+    StatusLabel.TextColor3 = Color3.fromRGB(255, 60, 60)
+    StatusLabel.Text = "❌ YOU ARE BANNED FROM BANANA HUB!"
+    KeyInputBox.Editable = false
+    SubmitKeyBtn.Active = false
+    SubmitKeyBtn.BackgroundColor3 = Color3.fromRGB(100, 30, 30)
+    SubmitKeyBtn.Text = "🚫 BANNED USER"
+    task.delay(3, function()
+        pcall(function() LocalPlayer:Kick("You are banned from Banana Hub.") end)
+    end)
+    return
+elseif isWhitelistedUser then
     LoadScreenGui:Destroy()
     authenticated = true
 else
@@ -141,7 +156,7 @@ else
 end
 
 --------------------------------------------------------------------------------
--- MAIN HUB CLEANUP & SETUP
+-- MAIN HUB CLEANUP & SETUP[cite: 1]
 --------------------------------------------------------------------------------
 if getgenv().BananaHubCleanup then pcall(getgenv().BananaHubCleanup) end
 
@@ -176,7 +191,7 @@ local ON_GRAD  = ColorSequence.new({ColorSequenceKeypoint.new(0, Color3.fromRGB(
 
 local function safeBindClick(btn, cb) btn.Activated:Connect(function() pcall(cb) end) end
 
--- Optimized & Cached Rake Finder (Stops Lag Spikes)
+-- Optimized & Cached Rake Finder (Stops Lag Spikes)[cite: 1]
 local cachedRake, cachedPart = nil, nil
 local lastRakeCheck = 0
 local function findTheRakeModel()
@@ -208,7 +223,7 @@ local function findTheRakeModel()
 end
 
 --------------------------------------------------------------------------------
--- MID-SIZE MAIN GUI (600x480)
+-- MID-SIZE MAIN GUI (600x480)[cite: 1]
 --------------------------------------------------------------------------------
 local ScreenGui = Instance.new("ScreenGui", ParentGui)
 ScreenGui.Name = "BananaHubMainGui"
@@ -267,7 +282,7 @@ safeBindClick(CloseBtn, function() MainFrame.Visible = false end)
 safeBindClick(ToggleIcon, function() MainFrame.Visible = not MainFrame.Visible end)
 
 --------------------------------------------------------------------------------
--- BOSS MODE STARTER PANEL
+-- BOSS MODE STARTER PANEL[cite: 1]
 --------------------------------------------------------------------------------
 local ModeFrame = Instance.new("Frame", MainFrame)
 ModeFrame.Size = UDim2.new(0.95, 0, 0, 68)
@@ -325,7 +340,7 @@ safeBindClick(StartModeBtn, function()
 end)
 
 --------------------------------------------------------------------------------
--- SCROLLING FRAME & GRID FOR MODULES
+-- SCROLLING FRAME & GRID FOR MODULES[cite: 1]
 --------------------------------------------------------------------------------
 local ScrollingFrame = Instance.new("ScrollingFrame", MainFrame)
 ScrollingFrame.Size = UDim2.new(0.95, 0, 0.65, 0)
@@ -350,7 +365,7 @@ local function CreateBtn(text, order)
 end
 
 --------------------------------------------------------------------------------
--- COMPACT HEALTH GUI
+-- COMPACT HEALTH GUI[cite: 1]
 --------------------------------------------------------------------------------
 local HealthGui = Instance.new("ScreenGui", ParentGui)
 HealthGui.Name = "BananaHubPlayerHPGui"
@@ -372,7 +387,7 @@ Connections.HPTracker = RunService.Heartbeat:Connect(function()
 end)
 
 --------------------------------------------------------------------------------
--- MODULE BUTTONS & LOGIC
+-- MODULE BUTTONS & LOGIC[cite: 1]
 --------------------------------------------------------------------------------
 local AIBattleBtn, AIBattleS, AIBattleG = CreateBtn("⚔️ Battle AI Orbit: OFF", 1)
 local BringSpawnablesBtn, SpawnS, SpawnG = CreateBtn("🎯 Turrets/Spawnables -> Rake: OFF", 2)
@@ -398,7 +413,7 @@ local GhostWalkBtn, GhostS, GhostG = CreateBtn("👻 Ghost Walk: OFF", 21)
 local InteractBtn, IntS, IntG = CreateBtn("🦇 Instant Interact: OFF", 22)
 local BringBossBtn, BringS, BringG = CreateBtn("🧲 Bring Boss: OFF", 23)
 
--- 1. Battle AI (Spin around Rake / Rakoof)
+-- 1. Battle AI (Spin around Rake / Rakoof)[cite: 1]
 local angle = 0
 safeBindClick(AIBattleBtn, function()
     Features.AIBattle = not Features.AIBattle
@@ -424,7 +439,7 @@ Connections.AIBattleLoop = RunService.RenderStepped:Connect(function(dt)
     end
 end)
 
--- 2. Teleport All Spawnable Models to THE_RAKE
+-- 2. Teleport All Spawnable Models to THE_RAKE[cite: 1]
 safeBindClick(BringSpawnablesBtn, function()
     Features.BringSpawnables = not Features.BringSpawnables
     BringSpawnablesBtn.Text = Features.BringSpawnables and "🎯 Turrets/Spawnables -> Rake: ON" or "🎯 Turrets/Spawnables -> Rake: OFF"
@@ -459,7 +474,7 @@ Connections.SpawnablesLoop = RunService.Heartbeat:Connect(function()
     end
 end)
 
--- 3. Teleport Candy / Souls directly to Player
+-- 3. Teleport Candy / Souls directly to Player[cite: 1]
 safeBindClick(CandyTpBtn, function()
     Features.AutoCandyTP = not Features.AutoCandyTP
     CandyTpBtn.Text = Features.AutoCandyTP and "🌀 Bring Candy To Me: ON" or "🌀 Bring Candy To Me: OFF"
@@ -484,7 +499,7 @@ Connections.CandyLoop = RunService.Heartbeat:Connect(function()
     end
 end)
 
--- 4. Auto Farm Souls
+-- 4. Auto Farm Souls[cite: 1]
 safeBindClick(MiscSoulsBtn, function()
     Features.AutoMiscSouls = not Features.AutoMiscSouls
     MiscSoulsBtn.Text = Features.AutoMiscSouls and "👻 Soul Farm: ON" or "👻 Auto Farm Souls: OFF"
@@ -523,7 +538,7 @@ Tasks.SoulTask = task.spawn(function()
     end
 end)
 
--- 5. Lag-Free Auto Pick-Up (Restricted to Workspace.Drops folder only)
+-- 5. Lag-Free Auto Pick-Up (Restricted to Workspace.Drops folder only)[cite: 1]
 safeBindClick(AutoPickupBtn, function()
     Features.AutoPickup = not Features.AutoPickup
     AutoPickupBtn.Text = Features.AutoPickup and "🌀 Auto Pick-Up (Drops): ON" or "🌀 Auto Pick-Up (Drops): OFF"
@@ -556,7 +571,7 @@ Tasks.AutoPickupTask = task.spawn(function()
     end
 end)
 
--- Fly Hack
+-- Fly Hack[cite: 1]
 local bodyVel, bodyGyro
 safeBindClick(FlyBtn, function()
     Features.Fly = not Features.Fly
@@ -584,7 +599,7 @@ safeBindClick(FlyBtn, function()
     end
 end)
 
--- Inf Jump
+-- Inf Jump[cite: 1]
 safeBindClick(InfJumpBtn, function()
     Features.InfJump = not Features.InfJump
     InfJumpBtn.Text = Features.InfJump and "🦘 Inf Jump: ON" or "🦘 Inf Jump Loop: OFF"
@@ -598,7 +613,7 @@ safeBindClick(InfJumpBtn, function()
     end
 end)
 
--- Full Bright
+-- Full Bright[cite: 1]
 safeBindClick(BrightBtn, function()
     Features.FullBright = not Features.FullBright
     BrightBtn.Text = Features.FullBright and "💡 Full Bright: ON" or "💡 Full Bright: OFF"
@@ -610,7 +625,7 @@ safeBindClick(BrightBtn, function()
     end
 end)
 
--- Max Stamina
+-- Max Stamina[cite: 1]
 safeBindClick(StaminaBtn, function()
     Features.MaxStamina = not Features.MaxStamina
     StaminaBtn.Text = Features.MaxStamina and "⚡ Max Stamina: ON" or "⚡ Max Stamina: OFF"
@@ -631,7 +646,7 @@ Tasks.StaminaTask = task.spawn(function()
     end
 end)
 
--- God Mode
+-- God Mode[cite: 1]
 safeBindClick(GodModeBtn, function()
     Features.GodMode = not Features.GodMode
     GodModeBtn.Text = Features.GodMode and "🛡️ God Mode: ON" or "🛡️ God Mode: OFF"
@@ -647,7 +662,7 @@ Tasks.GodModeTask = task.spawn(function()
     end
 end)
 
--- Hitbox Expander
+-- Hitbox Expander[cite: 1]
 safeBindClick(HitboxBtn, function()
     Features.ExpandHitbox = not Features.ExpandHitbox
     HitboxBtn.Text = Features.ExpandHitbox and "📦 Hitbox: ON" or "📦 Expand Hitbox: OFF"
@@ -664,7 +679,7 @@ Connections.HitboxLoop = RunService.RenderStepped:Connect(function()
     end
 end)
 
--- Lag-Free & Optimized Inf Reach (Solara / PC Compatible)
+-- Lag-Free & Optimized Inf Reach (Solara / PC Compatible)[cite: 1]
 safeBindClick(InfReachBtn, function()
     Features.InfReach = not Features.InfReach
     InfReachBtn.Text = Features.InfReach and "📏 INF REACH: ON" or "📏 INF REACH: OFF"
@@ -690,14 +705,14 @@ Tasks.InfReachTask = task.spawn(function()
                     end
                 end
             end)
-            task.wait(0.2) -- Throttled securely to avoid lagging the game/executor
+            task.wait(0.2)
         else
             task.wait(0.5)
         end
     end
 end)
 
--- Fast Spam Clicker
+-- Fast Spam Clicker[cite: 1]
 safeBindClick(AttackBtn, function()
     Features.AutoAttack = not Features.AutoAttack
     AttackBtn.Text = Features.AutoAttack and "⚔️ Spam Clicker: ON" or "⚔️ Fast Spam Clicker: OFF"
@@ -710,7 +725,7 @@ Connections.AttackLoop = RunService.RenderStepped:Connect(function()
     end
 end)
 
--- Trigger Bot
+-- Trigger Bot[cite: 1]
 safeBindClick(TrigBtn, function()
     Features.TriggerBot = not Features.TriggerBot
     TrigBtn.Text = Features.TriggerBot and "🎯 Trigger Bot: ON" or "🎯 Trigger Bot: OFF"
@@ -729,7 +744,7 @@ Connections.TrigLoop = RunService.RenderStepped:Connect(function()
     end
 end)
 
--- Luck 250x
+-- Luck 250x[cite: 1]
 safeBindClick(Luck250Btn, function()
     Features.Luck250 = not Features.Luck250
     Luck250Btn.Text = Features.Luck250 and "🍀 Luck 250x: ON" or "🍀 Luck 250x: OFF"
@@ -747,7 +762,7 @@ Tasks.Luck250Task = task.spawn(function()
     end
 end)
 
--- Luck 1000x
+-- Luck 1000x[cite: 1]
 safeBindClick(Luck1000Btn, function()
     Features.Luck1000 = not Features.Luck1000
     Luck1000Btn.Text = Features.Luck1000 and "🌟 Luck 1000x: ON" or "🌟 Luck 1000x: OFF"
@@ -765,7 +780,7 @@ Tasks.Luck1000Task = task.spawn(function()
     end
 end)
 
--- Bro Max Luck
+-- Bro Max Luck[cite: 1]
 safeBindClick(BroLuckBtn, function()
     Features.BroMaxLuck = not Features.BroMaxLuck
     BroLuckBtn.Text = Features.BroMaxLuck and "🍌 Bro Max Luck: ON" or "🍌 Bro Max Luck: OFF"
@@ -783,7 +798,7 @@ Tasks.BroLuckTask = task.spawn(function()
     end
 end)
 
--- THE_RAKE ESP
+-- THE_RAKE ESP[cite: 1]
 safeBindClick(ESPBtn, function()
     Features.RakeESP = not Features.RakeESP
     ESPBtn.Text = Features.RakeESP and "🚨 RAKE ESP: ON" or "🚨 THE_RAKE ESP: OFF"
@@ -802,7 +817,7 @@ Connections.ESPLoop = RunService.RenderStepped:Connect(function()
     end
 end)
 
--- Player ESP
+-- Player ESP[cite: 1]
 safeBindClick(PlayerESPBtn, function()
     Features.PlayerESP = not Features.PlayerESP
     PlayerESPBtn.Text = Features.PlayerESP and "👁️ Player ESP: ON" or "👁️ Player ESP: OFF"
@@ -820,7 +835,7 @@ safeBindClick(PlayerESPBtn, function()
     end
 end)
 
--- Auto Farm Head
+-- Auto Farm Head[cite: 1]
 safeBindClick(AutoFarmBtn, function()
     Features.AutoFarmRake = not Features.AutoFarmRake
     AutoFarmBtn.Text = Features.AutoFarmRake and "👹 Auto Farm: ON" or "👹 Auto Farm Head: OFF"
@@ -839,7 +854,7 @@ Connections.FarmLoop = RunService.RenderStepped:Connect(function()
     end
 end)
 
--- Ghost Walk
+-- Ghost Walk[cite: 1]
 safeBindClick(GhostWalkBtn, function()
     Features.GhostWalk = not Features.GhostWalk
     GhostWalkBtn.Text = Features.GhostWalk and "👻 Ghost Walk: ON" or "👻 Ghost Walk: OFF"
@@ -856,7 +871,7 @@ Connections.GhostLoop = RunService.Stepped:Connect(function()
     end
 end)
 
--- Instant Interact
+-- Instant Interact[cite: 1]
 safeBindClick(InteractBtn, function()
     Features.AutoInteract = not Features.AutoInteract
     InteractBtn.Text = Features.AutoInteract and "🦇 Instant Int: ON" or "🦇 Instant Auto-Interact: OFF"
@@ -870,7 +885,7 @@ Connections.IntLoop = RunService.Heartbeat:Connect(function()
     end
 end)
 
--- Bring Boss
+-- Bring Boss[cite: 1]
 safeBindClick(BringBossBtn, function()
     Features.BringBoss = not Features.BringBoss
     BringBossBtn.Text = Features.BringBoss and "🧲 Bring Boss: ON" or "🧲 Bring Boss: OFF"
