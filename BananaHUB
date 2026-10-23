@@ -55,7 +55,7 @@ local BANNED_USERNAME = "gust6114"
 
 local VALID_KEYS_LOOKUP = {
     ["BANANA-KEY-StaffNEW"] = true,
-    ["BANANA-KEY-Chrismas"] = true, ["BANANA-KEY-sdad"] = true, ["BANANA-KEY-Weekend"] = true,
+    ["BANANA-KEY-Chrismas"] = true, ["BANANA-KEY-sdad"] = true, ["BANANA-KEY-Weekend-V2"] = true,
     ["BANANA-KEY-BANANANA"] = true, ["BANANA-KEY-SUP"] = true, ["BANANA-KEY-Early2"] = true,
     ["BANANA-KEY-BANANANANANA"] = true, ["BANANA-KEY-BALLOW"] = true, ["BANANA-KEY-Weekend13S3"] = true,
     ["BANANA-KEY-S9TBA0"] = true, ["BANANA-KEY-WEEKNED3JACKLORD"] = true, ["BANANA-KEY-S34dM"] = true,
