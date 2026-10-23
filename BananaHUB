@@ -1,5 +1,5 @@
 -- ========================================================
--- 🍌 BANANA HUB V5.0 — DOOMSDAY TABBED EDITION 🍌🦈
+-- 🍌 BANANA HUB V5.0 — EXPANDED LUCK & KEY DISCORD EDITION 🍌🦈
 -- ========================================================
 
 local Players = game:GetService("Players")
@@ -47,7 +47,7 @@ local function makeDraggable(guiFrame, dragHandle)
 end
 
 --------------------------------------------------------------------------------
--- KEYS & AUTHENTICATION SCREEN (WITH BAN SYSTEM)[cite: 1]
+-- KEYS & AUTHENTICATION SCREEN (WITH DISCORD COPY BUTTON)[cite: 1]
 --------------------------------------------------------------------------------
 local ALLOWED_USER_ID = 9603761866
 local ALLOWED_USERNAME = "trebtrebalt3"
@@ -78,7 +78,7 @@ LoadScreenGui.DisplayOrder = 999
 
 local LoadFrame = Instance.new("Frame", LoadScreenGui)
 LoadFrame.AnchorPoint = Vector2.new(0.5, 0.5)
-LoadFrame.Size = UDim2.new(0, 440, 0, 280)
+LoadFrame.Size = UDim2.new(0, 440, 0, 310)
 LoadFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
 LoadFrame.BackgroundColor3 = Color3.fromRGB(22, 20, 26)
 Instance.new("UICorner", LoadFrame).CornerRadius = UDim.new(0, 14)
@@ -99,16 +99,16 @@ LoadTitle.TextSize = 12
 
 local StatusLabel = Instance.new("TextLabel", LoadFrame)
 StatusLabel.Size = UDim2.new(1, 0, 0, 24)
-StatusLabel.Position = UDim2.new(0, 0, 0.33, 0)
+StatusLabel.Position = UDim2.new(0, 0, 0.28, 0)
 StatusLabel.BackgroundTransparency = 1
-StatusLabel.Text = "Enter Key (e.g. Discord Key???)..."
+StatusLabel.Text = "Enter Key (Get key in Discord)..."
 StatusLabel.TextColor3 = Color3.fromRGB(240, 240, 240)
 StatusLabel.Font = Enum.Font.Gotham
 StatusLabel.TextSize = 11
 
 local KeyInputBox = Instance.new("TextBox", LoadFrame)
 KeyInputBox.Size = UDim2.new(0.88, 0, 0, 34)
-KeyInputBox.Position = UDim2.new(0.06, 0, 0.45, 0)
+KeyInputBox.Position = UDim2.new(0.06, 0, 0.38, 0)
 KeyInputBox.BackgroundColor3 = Color3.fromRGB(30, 28, 38)
 KeyInputBox.PlaceholderText = "Enter Key..."
 KeyInputBox.Text = ""
@@ -118,6 +118,30 @@ KeyInputBox.Font = Enum.Font.GothamBold
 KeyInputBox.TextSize = 11
 KeyInputBox.ClearTextOnFocus = false
 Instance.new("UICorner", KeyInputBox).CornerRadius = UDim.new(0, 8)
+
+-- Discord Copy Button on Auth Screen
+local LoadDiscordBtn = Instance.new("TextButton", LoadFrame)
+LoadDiscordBtn.Size = UDim2.new(0.88, 0, 0, 32)
+LoadDiscordBtn.Position = UDim2.new(0.06, 0, 0.54, 0)
+LoadDiscordBtn.BackgroundColor3 = Color3.fromRGB(35, 32, 22)
+LoadDiscordBtn.Text = "📋 COPY DISCORD LINK FOR KEY"
+LoadDiscordBtn.TextColor3 = Color3.fromRGB(255, 200, 0)
+LoadDiscordBtn.Font = Enum.Font.GothamBold
+LoadDiscordBtn.TextSize = 11
+Instance.new("UICorner", LoadDiscordBtn).CornerRadius = UDim.new(0, 8)
+Instance.new("UIStroke", LoadDiscordBtn).Color = Color3.fromRGB(255, 200, 0)
+
+LoadDiscordBtn.Activated:Connect(function()
+    pcall(function()
+        if setclipboard then
+            setclipboard("https://discord.gg/J6aSP8g6kJ")
+            LoadDiscordBtn.Text = "✅ COPIED DISCORD LINK!"
+        else
+            LoadDiscordBtn.Text = "❌ CLIPBOARD NOT SUPPORTED"
+        end
+        task.delay(1.5, function() LoadDiscordBtn.Text = "📋 COPY DISCORD LINK FOR KEY" end)
+    end)
+end)
 
 local SubmitKeyBtn = Instance.new("TextButton", LoadFrame)
 SubmitKeyBtn.Size = UDim2.new(0.88, 0, 0, 34)
@@ -165,7 +189,8 @@ if getgenv().BananaHubCleanup then pcall(getgenv().BananaHubCleanup) end
 local Features = {
     Fly = false, InfJump = false, FullBright = false, MaxStamina = false,
     BroMaxLuck = false, AutoAttack = false, BringBoss = false, ExpandHitbox = false, 
-    AutoPickup = false, TriggerBot = false, Luck250 = false, Luck1000 = false,
+    AutoPickup = false, TriggerBot = false, Luck250 = false, Luck500 = false,
+    Luck750 = false, Luck1000 = false, Luck2500 = false, Luck5000 = false, Luck10000 = false,
     GhostWalk = false, AutoInteract = false, AutoMiscSouls = false, AutoFarmRake = false, 
     GodMode = false, PlayerESP = false, RakeESP = false, InfReach = false, AIBattle = false,
     BringSpawnables = false, AutoCandyTP = false
@@ -225,7 +250,7 @@ local function findTheRakeModel()
 end
 
 --------------------------------------------------------------------------------
--- MAIN GUI CREATION (DOOMSDAY TABBED LAYOUT)[cite: 1, 10]
+-- MAIN GUI CREATION (DOOMSDAY TABBED LAYOUT)[cite: 1]
 --------------------------------------------------------------------------------
 local ScreenGui = Instance.new("ScreenGui", ParentGui)
 ScreenGui.Name = "BananaHubMainGui"
@@ -359,10 +384,10 @@ local function createTab(name, icon, order)
 end
 
 -- Create Tabs
-local InfoPage  = createTab("Info", "ℹ️", 1)
-local MainPage  = createTab("Main", "🍌", 2)
-local AutoPage  = createTab("Auto", "🔄", 3)
-local LuckPage  = createTab("Luck", "🍀", 4)
+local InfoPage   = createTab("Info", "ℹ️", 1)
+local MainPage   = createTab("Main", "🍌", 2)
+local AutoPage   = createTab("Auto", "🔄", 3)
+local LuckPage   = createTab("Luck", "🍀", 4)
 local PlayerPage = createTab("Player", "🏃", 5)
 
 -- Default Active Tab
@@ -440,7 +465,6 @@ end)
 --------------------------------------------------------------------------------
 -- 2. MAIN TAB CONTENT[cite: 1]
 --------------------------------------------------------------------------------
--- Boss Mode Starter Panel
 local ModeFrame = Instance.new("Frame", MainPage)
 ModeFrame.Size = UDim2.new(1, 0, 0, 75)
 ModeFrame.BackgroundColor3 = Color3.fromRGB(32, 28, 38)
@@ -745,62 +769,56 @@ Connections.SpawnablesLoop = RunService.Heartbeat:Connect(function()
 end)
 
 --------------------------------------------------------------------------------
--- 4. LUCK TAB CONTENT[cite: 1]
+-- 4. LUCK TAB CONTENT (EXPANDED TIERS)[cite: 1]
 --------------------------------------------------------------------------------
 local Luck250Btn, Luck250S, Luck250G = CreatePageBtn(LuckPage, "🍀 Luck 250x: OFF", 1)
-local Luck1000Btn, Luck1000S, Luck1000G = CreatePageBtn(LuckPage, "🌟 Luck 1000x: OFF", 2)
-local BroLuckBtn, BroLuckS, BroLuckG = CreatePageBtn(LuckPage, "🍌 Bro Max Luck: OFF", 3)
+local Luck500Btn, Luck500S, Luck500G = CreatePageBtn(LuckPage, "🔥 Luck 500x: OFF", 2)
+local Luck750Btn, Luck750S, Luck750G = CreatePageBtn(LuckPage, "💎 Luck 750x: OFF", 3)
+local Luck1000Btn, Luck1000S, Luck1000G = CreatePageBtn(LuckPage, "🌟 Luck 1000x: OFF", 4)
+local Luck2500Btn, Luck2500S, Luck2500G = CreatePageBtn(LuckPage, "⚡ Luck 2500x: OFF", 5)
+local Luck5000Btn, Luck5000S, Luck5000G = CreatePageBtn(LuckPage, "🚀 Luck 5000x: OFF", 6)
+local Luck10000Btn, Luck10000S, Luck10000G = CreatePageBtn(LuckPage, "👑 Luck 10000x: OFF", 7)
+local BroLuckBtn, BroLuckS, BroLuckG = CreatePageBtn(LuckPage, "🍌 Bro Max Luck: OFF", 8)
 
-safeBindClick(Luck250Btn, function()
-    Features.Luck250 = not Features.Luck250
-    Luck250Btn.Text = Features.Luck250 and "🍀 Luck 250x: ON" or "🍀 Luck 250x: OFF"
-    Luck250G.Color = Features.Luck250 and ON_GRAD or OFF_GRAD
-end)
-Tasks.Luck250Task = task.spawn(function()
-    while true do
-        if Features.Luck250 then
-            pcall(function()
-                LocalPlayer:SetAttribute("Luck", 250)
-                LocalPlayer:SetAttribute("LuckMultiplier", 250)
-            end)
+-- Helper for setting up Luck multipliers safely
+local function setupLuckToggle(btn, gradKey, multiplier)
+    safeBindClick(btn, function()
+        Features[gradKey] = not Features[gradKey]
+        btn.Text = string.gsub(btn.Text, Features[gradKey] and "OFF" or "ON", Features[gradKey] and "ON" or "OFF")
+        -- Quick status swap
+        if Features[gradKey] then
+            btn.Text = btn.Text:gsub("OFF", "ON")
+        else
+            btn.Text = btn.Text:gsub("ON", "OFF")
         end
-        task.wait(0.5)
-    end
-end)
+        local parentGrad = btn:FindFirstChildOfClass("UIGradient")
+        if parentGrad then
+            parentGrad.Color = Features[gradKey] and ON_GRAD or OFF_GRAD
+        end
+    end)
+    
+    tasks = Tasks or {}
+    table.insert(Tasks, task.spawn(function()
+        while true do
+            if Features[gradKey] then
+                pcall(function()
+                    LocalPlayer:SetAttribute("Luck", multiplier)
+                    LocalPlayer:SetAttribute("LuckMultiplier", multiplier)
+                end)
+            end
+            task.wait(0.5)
+        end
+    end))
+end
 
-safeBindClick(Luck1000Btn, function()
-    Features.Luck1000 = not Features.Luck1000
-    Luck1000Btn.Text = Features.Luck1000 and "🌟 Luck 1000x: ON" or "🌟 Luck 1000x: OFF"
-    Luck1000G.Color = Features.Luck1000 and ON_GRAD or OFF_GRAD
-end)
-Tasks.Luck1000Task = task.spawn(function()
-    while true do
-        if Features.Luck1000 then
-            pcall(function()
-                LocalPlayer:SetAttribute("Luck", 1000)
-                LocalPlayer:SetAttribute("LuckMultiplier", 1000)
-            end)
-        end
-        task.wait(0.5)
-    end
-end)
-
-safeBindClick(BroLuckBtn, function()
-    Features.BroMaxLuck = not Features.BroMaxLuck
-    BroLuckBtn.Text = Features.BroMaxLuck and "🍌 Bro Max Luck: ON" or "🍌 Bro Max Luck: OFF"
-    BroLuckG.Color = Features.BroMaxLuck and ON_GRAD or OFF_GRAD
-end)
-Tasks.BroLuckTask = task.spawn(function()
-    while true do
-        if Features.BroMaxLuck then
-            pcall(function()
-                LocalPlayer:SetAttribute("Luck", 999999)
-                LocalPlayer:SetAttribute("LuckMultiplier", 999999)
-            end)
-        end
-        task.wait(0.5)
-    end
-end)
+setupLuckToggle(Luck250Btn, "Luck250", 250)
+setupLuckToggle(Luck500Btn, "Luck500", 500)
+setupLuckToggle(Luck750Btn, "Luck750", 750)
+setupLuckToggle(Luck1000Btn, "Luck1000", 1000)
+setupLuckToggle(Luck2500Btn, "Luck2500", 2500)
+setupLuckToggle(Luck5000Btn, "Luck5000", 5000)
+setupLuckToggle(Luck10000Btn, "Luck10000", 10000)
+setupLuckToggle(BroLuckBtn, "BroMaxLuck", 999999)
 
 --------------------------------------------------------------------------------
 -- 5. PLAYER TAB CONTENT[cite: 1]
