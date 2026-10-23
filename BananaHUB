@@ -1,4 +1,4 @@
--- Banana Hub V5.0 | Ultimate Complete Edition + Optimized Inf Reach 🍌🦈[cite: 1]
+-- Banana Hub V5.0 | Ultimate Complete Edition + Optimized Inf Reach & Auto Pick-Up 🍌🦈[cite: 1]
 
 local Players = game:GetService("Players")
 local Workspace = game:GetService("Workspace")
@@ -538,12 +538,13 @@ Tasks.SoulTask = task.spawn(function()
     end
 end)
 
--- 5. Lag-Free Auto Pick-Up (Restricted to Workspace.Drops folder only)[cite: 1]
+-- 5. Optimized & Instant Auto Pick-Up (Restricted to Workspace.Drops folder)[cite: 1]
 safeBindClick(AutoPickupBtn, function()
     Features.AutoPickup = not Features.AutoPickup
     AutoPickupBtn.Text = Features.AutoPickup and "🌀 Auto Pick-Up (Drops): ON" or "🌀 Auto Pick-Up (Drops): OFF"
     AutoPickupG.Color = Features.AutoPickup and ON_GRAD or OFF_GRAD
 end)
+
 Tasks.AutoPickupTask = task.spawn(function()
     while true do
         if Features.AutoPickup then
@@ -554,17 +555,23 @@ Tasks.AutoPickupTask = task.spawn(function()
                     local dropsFolder = Workspace:FindFirstChild("Drops") or Workspace:FindFirstChild("drops")
                     if dropsFolder then
                         for _, obj in ipairs(dropsFolder:GetDescendants()) do
-                            if obj:IsA("BasePart") and typeof(firetouchinterest) == "function" then
-                                firetouchinterest(hrp, obj, 0)
-                                firetouchinterest(hrp, obj, 1)
+                            if obj:IsA("BasePart") then
+                                if typeof(firetouchinterest) == "function" then
+                                    pcall(function()
+                                        firetouchinterest(hrp, obj, 0)
+                                        firetouchinterest(hrp, obj, 1)
+                                    end)
+                                end
                             elseif obj:IsA("ProximityPrompt") then
-                                fireproximityprompt(obj)
+                                pcall(function()
+                                    fireproximityprompt(obj)
+                                end)
                             end
                         end
                     end
                 end
             end)
-            task.wait(0.2)
+            task.wait(0.05) -- Blazing fast scan rate for instant pickups
         else
             task.wait(0.5)
         end
