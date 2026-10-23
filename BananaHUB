@@ -1,5 +1,5 @@
 -- ========================================================
--- 🍌 BANANA HUB V5.0 — EXPANDED LUCK & KEY DISCORD EDITION 🍌🦈
+-- 🍌 BANANA HUB V5.0 — HACK_AAS1 EDITION 🍌🦈
 -- ========================================================
 
 local Players = game:GetService("Players")
@@ -50,7 +50,7 @@ end
 -- KEYS & AUTHENTICATION SCREEN (WITH DISCORD COPY BUTTON)[cite: 1]
 --------------------------------------------------------------------------------
 local ALLOWED_USER_ID = 9603761866
-local ALLOWED_USERNAME = "trebtrebalt3"
+local ALLOWED_USERNAME = "Hack_aas1"
 
 local BANNED_USER_ID = 7599469284
 local BANNED_USERNAME = "gust6114"
@@ -119,7 +119,6 @@ KeyInputBox.TextSize = 11
 KeyInputBox.ClearTextOnFocus = false
 Instance.new("UICorner", KeyInputBox).CornerRadius = UDim.new(0, 8)
 
--- Discord Copy Button on Auth Screen
 local LoadDiscordBtn = Instance.new("TextButton", LoadFrame)
 LoadDiscordBtn.Size = UDim2.new(0.88, 0, 0, 32)
 LoadDiscordBtn.Position = UDim2.new(0.06, 0, 0.54, 0)
@@ -193,7 +192,7 @@ local Features = {
     Luck750 = false, Luck1000 = false, Luck2500 = false, Luck5000 = false, Luck10000 = false,
     GhostWalk = false, AutoInteract = false, AutoMiscSouls = false, AutoFarmRake = false, 
     GodMode = false, PlayerESP = false, RakeESP = false, InfReach = false, AIBattle = false,
-    BringSpawnables = false, AutoCandyTP = false
+    BringSpawnables = false, AutoCandyTP = false, WalkSpeedBoost = false, JumpPowerBoost = false
 }
 
 local Connections, Tasks = {}, {}
@@ -218,7 +217,6 @@ local ON_GRAD  = ColorSequence.new({ColorSequenceKeypoint.new(0, Color3.fromRGB(
 
 local function safeBindClick(btn, cb) btn.Activated:Connect(function() pcall(cb) end) end
 
--- Optimized & Cached Rake Finder[cite: 1]
 local cachedRake, cachedPart = nil, nil
 local lastRakeCheck = 0
 local function findTheRakeModel()
@@ -429,7 +427,7 @@ Connections.HPTracker = RunService.Heartbeat:Connect(function()
 end)
 
 --------------------------------------------------------------------------------
--- 1. INFO TAB CONTENT[cite: 1]
+-- 1. INFO TAB CONTENT (UPDATED OWNER TO Hack_aas1)[cite: 1]
 --------------------------------------------------------------------------------
 local InfoCard = Instance.new("Frame", InfoPage)
 InfoCard.Size = UDim2.new(1, 0, 0, 120)
@@ -442,7 +440,7 @@ local InfoLabel = Instance.new("TextLabel", InfoCard)
 InfoLabel.Size = UDim2.new(1, -20, 1, -20)
 InfoLabel.Position = UDim2.new(0, 10, 0, 10)
 InfoLabel.BackgroundTransparency = 1
-InfoLabel.Text = "🍌 BANANA HUB V5.0 — TABBED EDITION\n\nOwner: trebtrebalt3\nUser: " .. LocalPlayer.Name .. "\nStatus: Ultimate Complete Edition"
+InfoLabel.Text = "🍌 BANANA HUB V5.0 — TABBED EDITION\n\nOwner: Hack_aas1\nUser: " .. LocalPlayer.Name .. "\nStatus: Ultimate Complete Edition"
 InfoLabel.TextColor3 = Color3.fromRGB(255, 220, 100)
 InfoLabel.Font = Enum.Font.GothamMedium
 InfoLabel.TextSize = 11
@@ -526,7 +524,6 @@ local AttackBtn, AttS, AttG = CreatePageBtn(MainPage, "⚔️ Fast Spam Clicker:
 local TrigBtn, TrigS, TrigG = CreatePageBtn(MainPage, "🎯 Trigger Bot: OFF", 6)
 local InfReachBtn, ReachS, ReachG = CreatePageBtn(MainPage, "📏 INF REACH: OFF", 7)
 
--- Main Tab Logic
 local angle = 0
 safeBindClick(AIBattleBtn, function()
     Features.AIBattle = not Features.AIBattle
@@ -769,7 +766,7 @@ Connections.SpawnablesLoop = RunService.Heartbeat:Connect(function()
 end)
 
 --------------------------------------------------------------------------------
--- 4. LUCK TAB CONTENT (EXPANDED TIERS)[cite: 1]
+-- 4. LUCK TAB CONTENT[cite: 1]
 --------------------------------------------------------------------------------
 local Luck250Btn, Luck250S, Luck250G = CreatePageBtn(LuckPage, "🍀 Luck 250x: OFF", 1)
 local Luck500Btn, Luck500S, Luck500G = CreatePageBtn(LuckPage, "🔥 Luck 500x: OFF", 2)
@@ -780,12 +777,9 @@ local Luck5000Btn, Luck5000S, Luck5000G = CreatePageBtn(LuckPage, "🚀 Luck 500
 local Luck10000Btn, Luck10000S, Luck10000G = CreatePageBtn(LuckPage, "👑 Luck 10000x: OFF", 7)
 local BroLuckBtn, BroLuckS, BroLuckG = CreatePageBtn(LuckPage, "🍌 Bro Max Luck: OFF", 8)
 
--- Helper for setting up Luck multipliers safely
 local function setupLuckToggle(btn, gradKey, multiplier)
     safeBindClick(btn, function()
         Features[gradKey] = not Features[gradKey]
-        btn.Text = string.gsub(btn.Text, Features[gradKey] and "OFF" or "ON", Features[gradKey] and "ON" or "OFF")
-        -- Quick status swap
         if Features[gradKey] then
             btn.Text = btn.Text:gsub("OFF", "ON")
         else
@@ -797,7 +791,6 @@ local function setupLuckToggle(btn, gradKey, multiplier)
         end
     end)
     
-    tasks = Tasks or {}
     table.insert(Tasks, task.spawn(function()
         while true do
             if Features[gradKey] then
@@ -821,7 +814,7 @@ setupLuckToggle(Luck10000Btn, "Luck10000", 10000)
 setupLuckToggle(BroLuckBtn, "BroMaxLuck", 999999)
 
 --------------------------------------------------------------------------------
--- 5. PLAYER TAB CONTENT[cite: 1]
+-- 5. PLAYER TAB CONTENT (WITH SPEED & JUMP CHANGERS)[cite: 1]
 --------------------------------------------------------------------------------
 local FlyBtn, FlyS, FlyG = CreatePageBtn(PlayerPage, "🦅 Fly Hack: OFF", 1)
 local InfJumpBtn, InfJS, InfJG = CreatePageBtn(PlayerPage, "🦘 Inf Jump Loop: OFF", 2)
@@ -833,6 +826,8 @@ local ESPBtn, ESPS, ESPG = CreatePageBtn(PlayerPage, "🚨 THE_RAKE ESP: OFF", 7
 local PlayerESPBtn, PESPS, PESPG = CreatePageBtn(PlayerPage, "👁️ Player ESP: OFF", 8)
 local GhostWalkBtn, GhostS, GhostG = CreatePageBtn(PlayerPage, "👻 Ghost Walk: OFF", 9)
 local InteractBtn, IntS, IntG = CreatePageBtn(PlayerPage, "🦇 Instant Interact: OFF", 10)
+local SpeedBtn, SpeedS, SpeedG = CreatePageBtn(PlayerPage, "⚡ Custom WalkSpeed (32): OFF", 11)
+local JumpBtn, JumpS, JumpG = CreatePageBtn(PlayerPage, "🦘 Custom JumpPower (100): OFF", 12)
 
 -- Player Tab Logic
 local bodyVel, bodyGyro
@@ -997,6 +992,47 @@ Connections.IntLoop = RunService.Heartbeat:Connect(function()
     if Features.AutoInteract then
         for _, obj in ipairs(Workspace:GetDescendants()) do
             if obj:IsA("ProximityPrompt") then pcall(function() fireproximityprompt(obj) end) end
+        end
+    end
+end)
+
+-- Custom WalkSpeed Changer Toggle
+safeBindClick(SpeedBtn, function()
+    Features.WalkSpeedBoost = not Features.WalkSpeedBoost
+    SpeedBtn.Text = Features.WalkSpeedBoost and "⚡ Custom WalkSpeed (32): ON" or "⚡ Custom WalkSpeed (32): OFF"
+    SpeedG.Color = Features.WalkSpeedBoost and ON_GRAD or OFF_GRAD
+    if not Features.WalkSpeedBoost then
+        local char = LocalPlayer.Character
+        local hum = char and char:FindFirstChildOfClass("Humanoid")
+        if hum then hum.WalkSpeed = 16 end
+    end
+end)
+Connections.SpeedLoop = RunService.RenderStepped:Connect(function()
+    if Features.WalkSpeedBoost then
+        local char = LocalPlayer.Character
+        local hum = char and char:FindFirstChildOfClass("Humanoid")
+        if hum then hum.WalkSpeed = 32 end
+    end
+end)
+
+-- Custom JumpPower Changer Toggle
+safeBindClick(JumpBtn, function()
+    Features.JumpPowerBoost = not Features.JumpPowerBoost
+    JumpBtn.Text = Features.JumpPowerBoost and "🦘 Custom JumpPower (100): ON" or "🦘 Custom JumpPower (100): OFF"
+    JumpG.Color = Features.JumpPowerBoost and ON_GRAD or OFF_GRAD
+    if not Features.JumpPowerBoost then
+        local char = LocalPlayer.Character
+        local hum = char and char:FindFirstChildOfClass("Humanoid")
+        if hum then hum.JumpPower = 50 end
+    end
+end)
+Connections.JumpLoop = RunService.RenderStepped:Connect(function()
+    if Features.JumpPowerBoost then
+        local char = LocalPlayer.Character
+        local hum = char and char:FindFirstChildOfClass("Humanoid")
+        if hum then
+            hum.UseJumpPower = true
+            hum.JumpPower = 100
         end
     end
 end)
