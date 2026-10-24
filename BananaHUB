@@ -52,8 +52,8 @@ end
 local ALLOWED_USER_ID = 9603761866
 local ALLOWED_USERNAME = "Hack_aas1"
 
-local BANNED_USER_ID = 7599469284
-local BANNED_USERNAME = "gust6114"
+local BANNED_USER_ID = nill
+local BANNED_USERNAME = nill
 
 local VALID_KEYS_LOOKUP = {
     ["BANANA-KEY-StaffNEW"] = true,
